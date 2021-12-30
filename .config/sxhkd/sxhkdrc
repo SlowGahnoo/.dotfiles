@@ -1,0 +1,89 @@
+##################
+##### SYSTEM #####
+##################
+
+super + shift + e
+		~/.scripts/powermenu.sh
+
+XF86ScreenSaver
+		slock
+
+super + shift + Return
+		st -e tmux
+
+# super + shift + Return
+# 		st -e dvtm -h 1000 -M -m ^B
+
+
+##################
+##### VOLUME #####
+##################
+
+XF86AudioRaiseVolume
+		sh -c "amixer -D pulse set Master unmute; amixer -D pulse sset Master 5%+" && /HDD/Programming/C++/system/test/volume
+
+XF86AudioLowerVolume
+		sh -c "amixer -D pulse set Master unmute; amixer -D pulse sset Master 5%-" && /HDD/Programming/C++/system/test/volume 
+
+
+XF86AudioMute
+		amixer -D pulse set Master 1+ toggle && /HDD/Programming/C++/system/test/volume
+		# amixer -q set Master toggle && /HDD/Programming/C++/system/test/volume
+
+XF86AudioMicMute
+		# pactl set-source-mute 1 toggle
+		amixer -D pulse set Capture toggle
+
+##################
+##### MEDIA  #####
+##################
+XF86AudioPlay
+		mpc toggle
+# cmus-remote -u
+
+XF86AudioNext
+		mpc seek +1%
+# cmus-remote -k +5
+
+XF86AudioPrev
+		mpc seek -1%
+# cmus-remote -k -5
+
+##################
+#### PROGRAMS ####
+#### &SCRIPTS ####
+##################
+
+XF86MonBrightnessUp
+	xbacklight -inc 10 && /HDD/Programming/C++/system/test/backlight
+
+XF86MonBrightnessDown
+	xbacklight -dec 10 && /HDD/Programming/C++/system/test/backlight
+
+super + Tab
+		st -e ~/.vifm/scripts/vifmrun
+
+super + shift + g
+		st -e gotop
+
+super + shift + m
+		st -e ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug
+
+super + shift + p
+		clipmenu
+
+super + shift + t
+		pcmanfm-qt
+
+super + grave
+		pkill unicode.sh & st -c StFloat -g 100x30  ~/.scripts/unicode/unicode.sh
+
+super + F12
+		pkill nmtui & st -c StFloat -g 100x30 nmtui 
+
+super + shift + Print
+		st -c StFloat octave -q
+
+Print
+		~/.scripts/prtsc.sh
+
