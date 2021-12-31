@@ -30,6 +30,9 @@ Plug 'kristijanhusak/orgmode.nvim'
 Plug 'hoob3rt/lualine.nvim'
 " glsl highlight
 Plug 'tikhomirov/vim-glsl'
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 call plug#end()
 
 
