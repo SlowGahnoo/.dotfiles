@@ -66,7 +66,7 @@ settings = {
         'auto_save.session'                 : True,
         'content.pdfjs'                     : True,
         'content.blocking.enabled'          : True,
-        'content.blocking.method'           : 'hosts',
+        'content.blocking.method'           : 'adblock',
         'spellcheck.languages'              : ["en-GB", "el-GR"],
 
         # Adblock lists

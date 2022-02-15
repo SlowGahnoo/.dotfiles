@@ -6,6 +6,8 @@
 
 config_version: 2
 settings:
+  content.media.video_capture:
+    https://web.skype.com: true
   content.notifications.enabled:
     https://boards.4chan.org: true
     https://boards.4channel.org: true
@@ -14,6 +16,7 @@ settings:
     https://lainchan.org: true
     https://smuglo.li: true
     https://sushigirl.us: true
+    https://web.skype.com: true
   fonts.prompts:
     global: (TTF) terminus
   statusbar.show:

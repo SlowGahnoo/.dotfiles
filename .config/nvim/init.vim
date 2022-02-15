@@ -33,8 +33,14 @@ Plug 'tikhomirov/vim-glsl'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Nabla - Take your scientific notes in Neovim
+Plug 'jbyuki/nabla.nvim'
+
 call plug#end()
 
+nnoremap <F5> :lua require("nabla").action()<CR>
+nnoremap <leader>p :lua require("nabla").popup()<CR> 
+" Customize with popup({border = ...})  : `single` (default), `double`, `rounded`
 
 autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl
 
