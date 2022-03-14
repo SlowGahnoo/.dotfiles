@@ -32,10 +32,10 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'tikhomirov/vim-glsl'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
 " Nabla - Take your scientific notes in Neovim
 Plug 'jbyuki/nabla.nvim'
-
+" Bracey - plugin for live html, css and javascript editing in vim
+Plug 'turbio/bracey.vim', {'do': 'npm --prefix server'}
 call plug#end()
 
 nnoremap <F5> :lua require("nabla").action()<CR>
@@ -95,7 +95,15 @@ lua << EOF
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-  local servers = {'clangd', 'rust_analyzer', 'jedi_language_server'}
+  local servers = {
+	  'clangd', 
+	  'rust_analyzer', 
+	  'jedi_language_server', 
+	  'tsserver', 
+	  'html', 
+	  'cssls',
+	  }
+
   for _, lsp in ipairs(servers) do
 	  require('lspconfig')[lsp].setup {
 		  on_attach = on_attach,
@@ -123,7 +131,7 @@ lua << EOF
     ensure_installed = {'org'}, -- Or run :TSUpdate org
   }
 
-  require('orgmode').setup({ })
+  require('orgmode').setup_ts_grammar()
 
 EOF
 
@@ -190,10 +198,6 @@ noremap <c-l> <c-w>l
 
 " Open Terminal
 nnoremap tt :split<Bar>terminal<CR>
-
-"Access xclipboard (Deprecated with gvim)
-" vmap <F6> :!xclip -f -sel clip<CR>
-" map <F7> mz:-1r !xclip -o -sel clip<CR>`z
 
 "autoclose tags
 inoremap ( ()<left>
