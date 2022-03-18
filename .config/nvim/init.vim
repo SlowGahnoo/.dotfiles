@@ -36,6 +36,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'jbyuki/nabla.nvim'
 " Bracey - plugin for live html, css and javascript editing in vim
 Plug 'turbio/bracey.vim', {'do': 'npm --prefix server'}
+
+Plug 'windwp/nvim-autopairs'
 call plug#end()
 
 nnoremap <F5> :lua require("nabla").action()<CR>
@@ -53,6 +55,8 @@ lua << EOF
 	  section_separators = {''},
 	}
   })
+
+  require('nvim-autopairs').setup{}
 
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -200,10 +204,10 @@ noremap <c-l> <c-w>l
 nnoremap tt :split<Bar>terminal<CR>
 
 "autoclose tags
-inoremap ( ()<left>
-inoremap { {}<left>
-inoremap [ []<left>
-inoremap " ""<left>
+" inoremap ( ()<left>
+" inoremap { {}<left>
+" inoremap [ []<left>
+" inoremap " ""<left>
 
 let mapleader="\<Space>"
 
