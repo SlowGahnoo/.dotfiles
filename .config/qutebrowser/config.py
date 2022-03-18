@@ -54,7 +54,7 @@ settings = {
         'downloads.location.directory'      : '/HDD/Downloads',
 
         # UI
-        'colors.webpage.bg'                 : 'black',
+        # 'colors.webpage.bg'                 : 'black',
         # 'colors.webpage.darkmode.enabled'   : True,
         'tabs.show'                         : 'multiple',
         'scrolling.smooth'                  : True,
