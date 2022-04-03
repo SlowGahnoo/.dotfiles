@@ -14,8 +14,6 @@ export RIPCORD_STYLE_ENGINE=wrong
 
 export DVTM_EDITOR=vim
 
-setxkbmap -option caps:escape &
-
 # Daemons
 sxhkd &
 dunst &
@@ -33,4 +31,6 @@ feh --bg-max $HOME/Wallpapers/qwe_download.jpg &
 picom --config $HOME/.config/picom/picom.conf &
 
 source /etc/X11/xinit/xinitrc.d/*
+
+setxkbmap -option caps:escape 
 exec dwm

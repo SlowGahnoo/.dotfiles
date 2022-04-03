@@ -13,8 +13,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'chrisbra/Recover.vim'
 " Convinient commenting
 Plug 'tpope/vim-commentary'
-" Better C++ syntax highlighting
-Plug 'octol/vim-cpp-enhanced-highlight'
 " nvim-lspconfig
 Plug 'neovim/nvim-lspconfig'
 " nvim-cmp 
@@ -24,6 +22,10 @@ Plug 'hrsh7th/nvim-cmp'
 " For vsnip user.
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+" Friendly snippets
+Plug 'rafamadriz/friendly-snippets'
 " nvim orgmode
 Plug 'nvim-orgmode/orgmode'
 " nvim lualine
@@ -37,11 +39,18 @@ Plug 'jbyuki/nabla.nvim'
 " Bracey - plugin for live html, css and javascript editing in vim
 Plug 'turbio/bracey.vim', {'do': 'npm --prefix server'}
 
+" Debug Adapter Protocol 
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'mfussenegger/nvim-dap-python'
+
 Plug 'windwp/nvim-autopairs'
 call plug#end()
 
-nnoremap <F5> :lua require("nabla").action()<CR>
-nnoremap <leader>p :lua require("nabla").popup()<CR> 
+let mapleader="\<Space>"
+
+" nnoremap <F5> :lua require("nabla").action()<CR>
+" nnoremap <leader>p :lua require("nabla").popup()<CR> 
 " Customize with popup({border = ...})  : `single` (default), `double`, `rounded`
 
 autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl
@@ -56,7 +65,9 @@ lua << EOF
 	}
   })
 
-  require('nvim-autopairs').setup{}
+  require('nvim-autopairs').setup({
+	enable_check_bracket_line = false
+  })
 
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -137,7 +148,70 @@ lua << EOF
 
   require('orgmode').setup_ts_grammar()
 
+  require('dap')
+  vim.fn.sign_define('DapBreakpoint', {text='📍', texthl='', linehl='', numhl=''})
+  require('dap-python').setup('/usr/bin/python')
+
+  require("dapui").setup({
+    icons = { expanded = "▾", collapsed = "▸" },
+    mappings = {
+      -- Use a table to apply multiple mappings
+      expand = { "<CR>", "<2-LeftMouse>" },
+      open = "o",
+      remove = "d",
+      edit = "e",
+      repl = "r",
+      toggle = "t",
+    },
+    sidebar = {
+      -- You can change the order of elements in the sidebar
+      elements = {
+        -- Provide as ID strings or tables with "id" and "size" keys
+        {
+          id = "scopes",
+          size = 0.25, -- Can be float or integer > 1
+        },
+        { id = "breakpoints", size = 0.25 },
+        { id = "stacks", size = 0.25 },
+        { id = "watches", size = 00.25 },
+      },
+      size = 40,
+      position = "left", -- Can be "left", "right", "top", "bottom"
+    },
+    tray = {
+      elements = { "repl" },
+      size = 10,
+      position = "bottom", -- Can be "left", "right", "top", "bottom"
+    },
+    floating = {
+      max_height = nil, -- These can be integers or a float between 0 and 1.
+      max_width = nil, -- Floats will be treated as percentage of your screen.
+      border = "single", -- Border style. Can be "single", "double" or "rounded"
+      mappings = {
+        close = { "q", "<Esc>" },
+      },
+    },
+    windows = { indent = 1 },
+  })
+
 EOF
+
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+
+nnoremap <F5>       :lua require('dap').continue()<CR>
+nnoremap <leader>n  :lua require('dap').step_over()<CR>
+nnoremap <leader>si :lua require('dap').step_into()<CR>
+nnoremap <leader>so :lua require('dap').step_out()<CR>
+nnoremap <leader>b  :lua require('dap').toggle_breakpoint()<CR>
+nnoremap <leader>dr :lua require('dap').repl.toggle()<CR>
+nnoremap <leader>dd :lua require('dapui').toggle()<CR>
+
 
 "Live LaTeX Preview
 let g:livepreview_previewer='zathura'
@@ -203,13 +277,6 @@ noremap <c-l> <c-w>l
 " Open Terminal
 nnoremap tt :split<Bar>terminal<CR>
 
-"autoclose tags
-" inoremap ( ()<left>
-" inoremap { {}<left>
-" inoremap [ []<left>
-" inoremap " ""<left>
-
-let mapleader="\<Space>"
 
 nnoremap <leader>k :m-2<cr>==
 nnoremap <leader>j :m+<cr>==
@@ -222,10 +289,3 @@ map <C-f> :NERDTreeToggle<CR>
 
 set iminsert=0
 set imsearch=-1"
-
-" vim-cpp-enchanced-highlight settings
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-
-
