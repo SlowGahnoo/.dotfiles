@@ -1,6 +1,4 @@
 call plug#begin('~/.vim/plugged')
-" A Vim Plugin for Lively Previewing LaTeX PDF Output
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 " Vim dracula theme
 Plug 'dracula/vim'
 " Vim colorschemes
@@ -66,7 +64,6 @@ lua << EOF
   })
 
   require('nvim-autopairs').setup({
-	enable_check_bracket_line = false
   })
 
   -- Setup nvim-cmp.
@@ -127,15 +124,7 @@ lua << EOF
   end
 
 
-  local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-  parser_config.org = {
-    install_info = {
-      url = 'https://github.com/milisims/tree-sitter-org',
-      revision = 'f110024d539e676f25b72b7c80b0fd43c34264ef',
-      files = {'src/parser.c', 'src/scanner.cc'},
-    },
-    filetype = 'org',
-  }
+  require('orgmode').setup_ts_grammar()
 
   require'nvim-treesitter.configs'.setup {
     highlight = {
@@ -146,10 +135,9 @@ lua << EOF
     ensure_installed = {'org'}, -- Or run :TSUpdate org
   }
 
-  require('orgmode').setup_ts_grammar()
 
   require('dap')
-  vim.fn.sign_define('DapBreakpoint', {text='📍', texthl='', linehl='', numhl=''})
+  vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
   require('dap-python').setup('/usr/bin/python')
 
   require("dapui").setup({
@@ -196,7 +184,6 @@ lua << EOF
 
 EOF
 
-
 " Jump forward or backward
 imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
@@ -204,19 +191,13 @@ imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 
-nnoremap <F5>       :lua require('dap').continue()<CR>
-nnoremap <leader>n  :lua require('dap').step_over()<CR>
-nnoremap <leader>si :lua require('dap').step_into()<CR>
-nnoremap <leader>so :lua require('dap').step_out()<CR>
-nnoremap <leader>b  :lua require('dap').toggle_breakpoint()<CR>
-nnoremap <leader>dr :lua require('dap').repl.toggle()<CR>
-nnoremap <leader>dd :lua require('dapui').toggle()<CR>
-
-
-"Live LaTeX Preview
-let g:livepreview_previewer='zathura'
-let g:livepreview_engine='xelatex'
-let g:livepreview_cursorhold_recompile = 0
+nnoremap <silent> <F5>       :lua require('dap').continue()<CR>
+nnoremap <silent> <leader>n  :lua require('dap').step_over()<CR>
+nnoremap <silent> <leader>si :lua require('dap').step_into()<CR>
+nnoremap <silent> <leader>so :lua require('dap').step_out()<CR>
+nnoremap <silent> <leader>b  :lua require('dap').toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dr :lua require('dap').repl.toggle()<CR>
+nnoremap <silent> <leader>dd :lua require('dapui').toggle()<CR>
 
 " Enable mouse
 set mouse=a
