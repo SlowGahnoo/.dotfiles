@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 " Vim dracula theme
 Plug 'dracula/vim'
 " Vim colorschemes
