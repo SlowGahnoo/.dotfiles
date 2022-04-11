@@ -33,7 +33,7 @@ Plug 'tikhomirov/vim-glsl'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Nabla - Take your scientific notes in Neovim
-Plug 'jbyuki/nabla.nvim'
+" Plug 'jbyuki/nabla.nvim'
 " Bracey - plugin for live html, css and javascript editing in vim
 Plug 'turbio/bracey.vim', {'do': 'npm --prefix server'}
 
@@ -43,6 +43,8 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'mfussenegger/nvim-dap-python'
 
 Plug 'windwp/nvim-autopairs'
+
+Plug 'folke/which-key.nvim'
 call plug#end()
 
 let mapleader="\<Space>"
@@ -126,6 +128,8 @@ lua << EOF
 
   require('orgmode').setup_ts_grammar()
 
+  require('orgmode').setup()
+
   require'nvim-treesitter.configs'.setup {
     highlight = {
       enable = true,
@@ -181,6 +185,12 @@ lua << EOF
     },
     windows = { indent = 1 },
   })
+
+  require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
 
 EOF
 
