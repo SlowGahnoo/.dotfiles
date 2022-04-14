@@ -45,9 +45,12 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'windwp/nvim-autopairs'
 
 Plug 'folke/which-key.nvim'
+
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 let mapleader="\<Space>"
+set termguicolors
 
 " nnoremap <F5> :lua require("nabla").action()<CR>
 " nnoremap <leader>p :lua require("nabla").popup()<CR> 
@@ -63,6 +66,10 @@ lua << EOF
 	  component_separators = {'|'},
 	  section_separators = {''},
 	}
+  })
+
+  require('colorizer').setup({
+	css = {css = true;}
   })
 
   require('nvim-autopairs').setup({
@@ -223,7 +230,6 @@ set ttimeoutlen=100
 
 "Colorscheme
 colorscheme dracula_bold
-set termguicolors
 hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
 autocmd BufWritePost init.vim source %
 
