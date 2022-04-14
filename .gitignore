@@ -4,4 +4,4 @@
 .config/qutebrowser/quickmarks
 .config/fcitx/profile
 .config/qutebrowser/qsettings
-.config/nvim/plugged
+.config/nvim/plugin
