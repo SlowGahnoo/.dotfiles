@@ -17,6 +17,9 @@ vim.opt.completeopt = "menu,menuone,noselect"
 
 vim.opt.ttimeoutlen = 100
 
+vim.opt.spell = true
+vim.opt.spelllang = "en_gb"
+
 -- "Navigate by display lines instead of regular lines
 vim.api.nvim_set_keymap("", "j", "gj", {noremap = true})
 vim.api.nvim_set_keymap("", "k", "gk", {noremap = true})
