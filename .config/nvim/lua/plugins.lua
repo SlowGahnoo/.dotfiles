@@ -9,12 +9,17 @@ require('packer').startup(function()
 	use 'hrsh7th/cmp-vsnip'
 	use 'hrsh7th/vim-vsnip'
 	use 'hrsh7th/vim-vsnip-integ'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-nvim-lua'
 	use 'rafamadriz/friendly-snippets'
+	use 'f3fora/cmp-spell'
 	use 'nvim-orgmode/orgmode'
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	use 'nvim-treesitter/nvim-treesitter-refactor'
+	use 'lewis6991/spellsitter.nvim'
 	use {
 		'turbio/bracey.vim',
 		run = 'npm --prefix server'
@@ -69,8 +74,40 @@ require'nvim-treesitter.configs'.setup {
     disable = {'org'},
     additional_vim_regex_highlighting = {'org'},
   },
-  ensure_installed = {'org'}, -- Or run :TSUpdate org
+  ensure_installed = {'c', 'cpp', 'lua', 'python','org'}, -- Or run :TSUpdate org
+  sync_install = false
 }
+
+ require'nvim-treesitter.configs'.setup {
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      -- Set to false if you have an `updatetime` of ~100.
+      clear_on_cursor_move = false,
+    },
+	smart_rename = {
+		enable = true,
+		keymaps = {
+			smart_rename = "grr",
+		},
+	},
+	navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition = "gnd",
+        list_definitions = "gnD",
+        list_definitions_toc = "gO",
+        goto_next_usage = "<a-*>",
+        goto_previous_usage = "<a-#>",
+      },
+	},
+  },
+}
+
+
+
+require('spellsitter').setup()
+
 
 cmp.setup({
   snippet = {
@@ -100,9 +137,12 @@ cmp.setup({
   },
 
   sources = {
+    { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer' },
+    { name = 'path' },
+    { name = 'spell' },
     { name = 'orgmode' },
   }
 })
