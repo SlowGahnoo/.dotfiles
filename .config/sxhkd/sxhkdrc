@@ -20,19 +20,10 @@ super + shift + Return
 ##################
 /home/chris/.scripts/notify
 
-XF86AudioRaiseVolume
-		sh -c "amixer -D pulse set Master unmute; amixer -D pulse sset Master 5%+" && /home/chris/.scripts/notify/volume
-
-XF86AudioLowerVolume
-		sh -c "amixer -D pulse set Master unmute; amixer -D pulse sset Master 5%-" && /home/chris/.scripts/notify/volume 
-
-
 XF86AudioMute
-		amixer -D pulse set Master 1+ toggle && /home/chris/.scripts/notify/volume
-		# amixer -q set Master toggle && /HDD/Programming/C++/system/test/volume
+		amixer -D pulse set Master 1+ toggle
 
 XF86AudioMicMute
-		# pactl set-source-mute 1 toggle
 		amixer -D pulse set Capture toggle
 
 ##################
@@ -54,12 +45,6 @@ XF86AudioPrev
 #### PROGRAMS ####
 #### &SCRIPTS ####
 ##################
-
-XF86MonBrightnessUp
-	xbacklight -inc 10 && /home/chris/.scripts/notify/backlight
-
-XF86MonBrightnessDown
-	xbacklight -dec 10 && /home/chris/.scripts/notify/backlight
 
 super + Tab
 		st -e ~/.vifm/scripts/vifmrun

@@ -6,3 +6,4 @@
 .config/qutebrowser/qsettings
 .config/nvim/plugin
 .config/qutebrowser/autoconfig.yml
+.config/qutebrowser/bookmarks/urls
