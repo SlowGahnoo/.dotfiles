@@ -18,7 +18,6 @@ super + shift + Return
 ##################
 ##### VOLUME #####
 ##################
-/home/chris/.scripts/notify
 
 XF86AudioMute
 		amixer -D pulse set Master 1+ toggle

@@ -12,7 +12,8 @@ require('packer').startup(function()
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'rafamadriz/friendly-snippets'
-	use 'f3fora/cmp-spell'
+	-- use 'f3fora/cmp-spell'
+	use 'uga-rosa/cmp-dictionary'
 	use 'nvim-orgmode/orgmode'
 	use {
 		'nvim-treesitter/nvim-treesitter',
@@ -40,6 +41,7 @@ require('packer').startup(function()
 	}
 	use 'tikhomirov/vim-glsl'
 	use 'ellisonleao/gruvbox.nvim'
+	use 'h-hg/fcitx.nvim'
 end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
@@ -146,9 +148,23 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'spell' },
+    { name = 'dictionary', keyword_length = 2 },
     { name = 'orgmode' },
   }
+})
+
+require("cmp_dictionary").setup({
+    dic = {
+        ["*"] = { "~/.config/nvim/dict/en.dict" },
+    },
+    -- The following are default values, so you don't need to write them if you don't want to change them
+    exact = 2,
+    first_case_insensitive = false,
+    document = false,
+    document_command = "wn %s -over",
+    async = true, 
+    capacity = 5,
+    debug = false,
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
