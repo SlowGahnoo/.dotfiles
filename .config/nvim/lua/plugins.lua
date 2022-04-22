@@ -40,7 +40,7 @@ require('packer').startup(function()
 	    }
 	}
 	use 'tikhomirov/vim-glsl'
-	use 'ellisonleao/gruvbox.nvim'
+	use 'Mofiqul/dracula.nvim'
 	use 'h-hg/fcitx.nvim'
 end)
 
@@ -57,7 +57,7 @@ require('nvim_comment').setup()
 
 require('lualine').setup({
   options = {
-    theme = 'gruvbox', 
+    theme = 'dracula', 
     component_separators = {'|'},
     section_separators = {''},
   }
