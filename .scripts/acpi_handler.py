@@ -18,6 +18,7 @@ def get_progress_string(items: int, status: int):
     return "▄" * filled + "▁" * (items - filled)
 
 class Notification:
+    """ Interface to create and send notifications with sound """
     interface = dbus.Interface(
             object = dbus.SessionBus().get_object("org.freedesktop.Notifications", "/org/freedesktop/Notifications") , 
             dbus_interface = "org.freedesktop.Notifications"
@@ -28,16 +29,20 @@ class Notification:
         self.desc = ""
         self.imagepath = ""
         self.urgency = 1
+        self.audio = ""
         self.targets = [self.notify_send, self.sound]
 
     def notify_send(self):
+        """ Send the notification """
         Notification.interface.Notify("", id(self) & 0xffffffff, "", 
              self.title, self.desc, [], {"image-path": self.imagepath, "urgency": self.urgency, }, 10000)
 
     def sound(self):
-        sound_context.play_simple({ GSound.ATTR_EVENT_ID: "audio-volume-change" })
+        """ Play a sound """
+        sound_context.play_simple({ GSound.ATTR_EVENT_ID: self.audio })
 
     def notify(self):
+        """ Send the notification while playing a sound """
         threads = [Thread(target = t) for t in self.targets]
         for t in threads: t.start()
         for t in threads: t.join()
@@ -52,7 +57,9 @@ class Volume(Notification):
 		    "audio-volume-high"
         ]
 
+        self.audio = "audio-volume-change"
         self.items = 30
+        self.update()
 
     def volume(self, flag):
         m = alsaaudio.Mixer()
@@ -71,6 +78,14 @@ class Volume(Notification):
         self.title = f"Volume level: {volume_perc:2.0f}%"
         self.desc = f"{get_progress_string(self.items, volume_perc)}"
         self.imagepath = self.icons[ceil(0.03 * volume_perc)]
+
+    def toggle(self):
+        muted = not alsaaudio.Mixer().getmute()[0]
+        if muted:
+            self.title = "Volume level: Muted"
+            self.imagepath = self.icons[0]
+        else: 
+            self.update()
 
 class Backlight(Notification):
     def __init__(self):
@@ -111,11 +126,9 @@ class Backlight(Notification):
         self.desc = f"{get_progress_string(self.items, perc)}"
         self.imagepath = self.icons[int(perc // 25)]
 
-
 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 s.connect("/var/run/acpid.socket")
 v = Volume()
-b = Backlight()
 while True:
     try:
         command = s.recv(4096).decode("utf-8")[:-1].split()
@@ -127,6 +140,10 @@ while True:
             b.set(command[1])
             b.update()
             b.notify()
+        if command[0][:len("button/mute")] == "button/mute":
+            v.toggle()
+            v.notify()
+
     except Exception as e:
         print(e)
     time.sleep(0.01)
