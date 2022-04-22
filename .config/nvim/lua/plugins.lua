@@ -32,7 +32,6 @@ require('packer').startup(function()
 	use 'rcarriga/nvim-dap-ui'
 	use 'mfussenegger/nvim-dap-python'
 	use 'terrortylor/nvim-comment'
-	use 'dracula/vim'
 	use {
 	    'kyazdani42/nvim-tree.lua',
 	    requires = {
@@ -40,6 +39,7 @@ require('packer').startup(function()
 	    }
 	}
 	use 'tikhomirov/vim-glsl'
+	use 'ellisonleao/gruvbox.nvim'
 end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
@@ -51,7 +51,7 @@ require('nvim_comment').setup()
 
 require('lualine').setup({
   options = {
-    theme = 'dracula', 
+    theme = 'gruvbox', 
     component_separators = {'|'},
     section_separators = {''},
   }

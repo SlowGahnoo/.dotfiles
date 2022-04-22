@@ -41,4 +41,4 @@ vim.cmd("command! Q :q")
 
 require('plugins')
 
-vim.cmd("colorscheme dracula")
+vim.cmd("colorscheme gruvbox")

@@ -4,8 +4,6 @@ import redirect
 
 config.load_autoconfig(True)
 
-config.source('nord-qutebrowser/nord-qutebrowser.py')
-
 c.aliases = { 
         "q"   : "close",
         "qa"  : "quit",
