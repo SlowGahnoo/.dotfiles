@@ -6,3 +6,7 @@
 .config/qutebrowser/qsettings
 .config/nvim/plugin
 .config/fcitx/clipboard
+
+.config/qutebrowser/__pycache__
+.config/qutebrowser/bookmarks
+.config/qutebrowser/autoconfig.yml

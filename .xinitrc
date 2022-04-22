@@ -33,5 +33,7 @@ picom --config $HOME/.config/picom/picom.conf &
 
 source /etc/X11/xinit/xinitrc.d/*
 
+python $HOME/.scripts/acpi_handler.py &
+
 setxkbmap -option caps:escape 
 exec dwm
