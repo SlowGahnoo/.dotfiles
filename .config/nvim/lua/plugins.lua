@@ -44,7 +44,11 @@ end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
 
-require('nvim-tree').setup() 
+require('nvim-tree').setup({
+	view = {
+		relativenumber = true
+	}
+}) 
 vim.api.nvim_set_keymap("n", "<c-f>", ":NvimTreeToggle<CR>", {noremap = true})
 
 require('nvim_comment').setup()
