@@ -5,5 +5,4 @@
 .config/fcitx/profile
 .config/qutebrowser/qsettings
 .config/nvim/plugin
-.config/qutebrowser/__pycache__
 .config/fcitx/clipboard
