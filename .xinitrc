@@ -25,7 +25,8 @@ fcitx -d &
 # Receive notifications from android phone
 an2linuxserver.py &
 
-feh --bg-max $HOME/Wallpapers/qwe_download.jpg &
+feh --bg-fill "$HOME/Wallpapers/1422455757637-4.png" &
+     
 
 # Run compositor
 picom --config $HOME/.config/picom/picom.conf &
