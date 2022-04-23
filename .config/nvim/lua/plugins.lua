@@ -40,7 +40,7 @@ require('packer').startup(function()
 	    }
 	}
 	use 'tikhomirov/vim-glsl'
-	use 'Mofiqul/dracula.nvim'
+	use 'dracula/vim'
 	use 'h-hg/fcitx.nvim'
 end)
 
