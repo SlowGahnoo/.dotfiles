@@ -6,7 +6,7 @@ from gi.repository import  GLib, GSound
 import alsaaudio
 from math import ceil
 from threading import Thread
-import time
+import sys
 import random
 
 sound_context = GSound.Context()
@@ -100,10 +100,12 @@ while True:
         if command[0][:len("button/mute")] == "button/mute":
             v.toggle()
             v.notify()
-
+    except socket.error as e:
+        print(e)
+        sys.exit(1)
     except Exception as e:
         print(e)
-    time.sleep(0.01)
+        continue
         
 
 s.close()
