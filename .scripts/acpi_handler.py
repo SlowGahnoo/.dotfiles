@@ -97,6 +97,7 @@ class Backlight(Notification):
 		    "notification-display-brightness-full",
 		    "notification-display-brightness-full"
         ]
+        self.audio = "audio-volume-change"
         with open("/sys/class/backlight/intel_backlight/max_brightness", "r") as f:
             self.max = int(f.read())
         self.items = 30
@@ -129,6 +130,7 @@ class Backlight(Notification):
 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 s.connect("/var/run/acpid.socket")
 v = Volume()
+b = Backlight()
 while True:
     try:
         command = s.recv(4096).decode("utf-8")[:-1].split()
