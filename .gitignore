@@ -10,3 +10,4 @@
 .config/qutebrowser/__pycache__
 .config/qutebrowser/bookmarks
 .config/qutebrowser/autoconfig.yml
+.config/mpv/watch_later
