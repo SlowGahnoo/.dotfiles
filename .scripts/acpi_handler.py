@@ -13,9 +13,13 @@ sound_context = GSound.Context()
 sound_context.init()
 
 
-def get_progress_string(items: int, status: int):
-    filled = int(items * status / 100 + 0.5)
-    return "▄" * filled + "▁" * (items - filled)
+class ProgressBar:
+    def __init__(self, size):
+        self.size = size;
+
+    def get_progress_string(self, status: int) -> str:
+        filled = int(self.size * status / 100 + 0.5)
+        return "▄" * filled + "▁" * (self.size - filled)
 
 class Notification:
     """ Interface to create and send notifications with sound """
@@ -58,7 +62,7 @@ class Volume(Notification):
         ]
 
         self.audio = "audio-volume-change"
-        self.items = 30
+        self.bar = ProgressBar(30)
         self.update()
 
     def volume(self, flag):
@@ -73,10 +77,9 @@ class Volume(Notification):
         m.setvolume(stereo_vol)
 
     def update(self):
-        stereo_vol = alsaaudio.Mixer().getvolume()
-        volume_perc = sum(stereo_vol)/len(stereo_vol)
+        volume_perc = alsaaudio.Mixer().getvolume()[0]
         self.title = f"Volume level: {volume_perc:2.0f}%"
-        self.desc = f"{get_progress_string(self.items, volume_perc)}"
+        self.desc = f"{self.bar.get_progress_string(volume_perc)}"
         self.imagepath = self.icons[ceil(0.03 * volume_perc)]
 
     def toggle(self):
@@ -98,9 +101,9 @@ class Backlight(Notification):
 		    "notification-display-brightness-full"
         ]
         self.audio = "audio-volume-change"
+        self.bar = ProgressBar(30)
         with open("/sys/class/backlight/intel_backlight/max_brightness", "r") as f:
             self.max = int(f.read())
-        self.items = 30
 
     def get_perc(self):
         with open("/sys/class/backlight/intel_backlight/brightness", "r") as f:
@@ -124,12 +127,13 @@ class Backlight(Notification):
     def update(self):
         perc = self.get_perc()
         self.title = f"Brightness level: {perc:2.0f}%"
-        self.desc = f"{get_progress_string(self.items, perc)}"
+        self.desc = f"{self.bar.get_progress_string(perc)}"
         self.imagepath = self.icons[int(perc // 25)]
 
 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 s.connect("/var/run/acpid.socket")
 v = Volume()
+b = Backlight()
 while True:
     try:
         command = s.recv(4096).decode("utf-8")[:-1].split()
