@@ -19,7 +19,6 @@ require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	use 'nvim-treesitter/nvim-treesitter-refactor'
 	use 'lewis6991/spellsitter.nvim'
 	use {
 		'turbio/bracey.vim',
@@ -82,32 +81,6 @@ require'nvim-treesitter.configs'.setup {
   },
   ensure_installed = {'c', 'cpp', 'lua', 'python','org'}, -- Or run :TSUpdate org
   sync_install = false
-}
-
- require'nvim-treesitter.configs'.setup {
-  refactor = {
-    highlight_definitions = {
-      enable = true,
-      -- Set to false if you have an `updatetime` of ~100.
-      clear_on_cursor_move = false,
-    },
-	smart_rename = {
-		enable = true,
-		keymaps = {
-			smart_rename = "grr",
-		},
-	},
-	navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition = "gnd",
-        list_definitions = "gnD",
-        list_definitions_toc = "gO",
-        goto_next_usage = "<a-*>",
-        goto_previous_usage = "<a-#>",
-      },
-	},
-  },
 }
 
 
@@ -232,6 +205,65 @@ require("dapui").setup({
   },
   windows = { indent = 1 },
 })
+
+local dap = require('dap')
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed
+  name = "lldb"
+}
+
+local dap = require('dap')
+dap.configurations.cpp = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+
+    -- 💀
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+
+    runInTerminal = false,
+
+    -- 💀
+    -- If you use `runInTerminal = true` and resize the terminal window,
+    -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
+    -- To avoid that uncomment the following option
+    -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
+    postRunCommands = {'process handle -p true -s false -n false SIGWINCH'},
+
+	env = function()
+  	  local variables = {}
+  	  for k, v in pairs(vim.fn.environ()) do
+  	    table.insert(variables, string.format("%s=%s", k, v))
+  	  end
+  	  return variables
+  	end,
+  },
+}
+
+
+
+
+-- If you want to use this for rust and c, add something like this:
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 
 
 vim.cmd([[
