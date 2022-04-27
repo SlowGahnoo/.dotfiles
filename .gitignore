@@ -11,3 +11,5 @@
 .config/qutebrowser/bookmarks
 .config/qutebrowser/autoconfig.yml
 .config/mpv/watch_later
+.config/nvim/cpptools
+.config/fcitx/log

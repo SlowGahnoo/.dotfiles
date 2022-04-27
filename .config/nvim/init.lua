@@ -15,6 +15,7 @@ vim.opt.smartindent = true
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
+vim.opt.updatetime = 300
 vim.opt.ttimeoutlen = 100
 
 vim.opt.spell = true
@@ -41,5 +42,6 @@ vim.cmd("command! Q :q")
 
 require('plugins')
 
+vim.cmd("set noshowmode")
 vim.cmd("colorscheme gruvbox")
 vim.cmd("set dictionary=spell,~/.config/nvim/dict/en.dict,~/.config/nvim/dict/el.dict")

@@ -109,10 +109,7 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    })
+    ['<CR>'] = cmp.mapping.confirm({ select = true, })
   },
 
   sources = {
@@ -220,7 +217,7 @@ require("dapui").setup({
       { id = "watches", size = 00.25 },
     },
     size = 40,
-    position = "left", -- Can be "left", "right", "top", "bottom"
+    position = "right", -- Can be "left", "right", "top", "bottom"
   },
   tray = {
     elements = { "repl" },
@@ -239,60 +236,37 @@ require("dapui").setup({
 })
 
 local dap = require('dap')
-dap.adapters.lldb = {
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
   type = 'executable',
-  command = '/usr/bin/lldb-vscode', -- adjust as needed
-  name = "lldb"
+  command = '/usr/local/bin/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
 }
 
 local dap = require('dap')
 dap.configurations.cpp = {
   {
-    name = "Launch",
-    type = "lldb",
+    name = "Launch file",
+    type = "cppdbg",
     request = "launch",
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
     cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
-
-    -- 💀
-    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-    --
-    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-    --
-    -- Otherwise you might get the following error:
-    --
-    --    Error on launch: Failed to attach to the target process
-    --
-    -- But you should be aware of the implications:
-    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-
-    runInTerminal = false,
-
-    -- 💀
-    -- If you use `runInTerminal = true` and resize the terminal window,
-    -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
-    -- To avoid that uncomment the following option
-    -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
-    postRunCommands = {'process handle -p true -s false -n false SIGWINCH'},
-
-	env = function()
-  	  local variables = {}
-  	  for k, v in pairs(vim.fn.environ()) do
-  	    table.insert(variables, string.format("%s=%s", k, v))
-  	  end
-  	  return variables
-  	end,
+    stopOnEntry = true,
+  },
+  {
+    name = 'Attach to gdbserver :1234',
+    type = 'cppdbg',
+    request = 'launch',
+    MIMode = 'gdb',
+    miDebuggerServerAddress = 'localhost:1234',
+    miDebuggerPath = '/usr/bin/gdb',
+    cwd = '${workspaceFolder}',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
   },
 }
-
-
-
-
--- If you want to use this for rust and c, add something like this:
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
