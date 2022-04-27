@@ -90,9 +90,50 @@ class Volume(Notification):
         else: 
             self.update()
 
+class Backlight(Notification):
+    def __init__(self):
+        super().__init__()
+        self.icons = [
+		    "notification-display-brightness-low",
+		    "notification-display-brightness-medium",
+		    "notification-display-brightness-high",
+		    "notification-display-brightness-full",
+		    "notification-display-brightness-full"
+        ]
+        self.audio = "audio-volume-change"
+        self.bar = ProgressBar(30)
+        with open("/sys/class/backlight/intel_backlight/max_brightness", "r") as f:
+            self.max = int(f.read())
+
+    def get_perc(self):
+        with open("/sys/class/backlight/intel_backlight/brightness", "r") as f:
+            level = int(f.read())
+        return 100 * level / self.max;
+
+    def set(self, flag):
+        level = self.get_perc()
+        if flag == "BRTUP":
+            new_level = level + 5
+            new_level = new_level if new_level < 100 else 100
+            with open("/sys/class/backlight/intel_backlight/brightness", "w") as f:
+                f.write(f"{int(self.max * new_level / 100)}")
+
+        if flag == "BRTDN":
+            new_level = level - 5
+            new_level = new_level if new_level > 0 else 0
+            with open("/sys/class/backlight/intel_backlight/brightness", "w") as f:
+                f.write(f"{int(self.max * new_level / 100)}")
+
+    def update(self):
+        perc = self.get_perc()
+        self.title = f"Brightness level: {perc:2.0f}%"
+        self.desc = f"{self.bar.get_progress_string(perc)}"
+        self.imagepath = self.icons[int(perc // 25)]
+
 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 s.connect("/var/run/acpid.socket")
 v = Volume()
+b = Backlight()
 while True:
     try:
         command = s.recv(4096).decode("utf-8")[:-1].split()
@@ -100,6 +141,10 @@ while True:
             v.volume(command[1])
             v.update()
             v.notify()
+        if command[0][:len("video/brightness")] == "video/brightness":
+            b.set(command[1])
+            b.update()
+            b.notify()
         if command[0][:len("button/mute")] == "button/mute":
             v.toggle()
             v.notify()

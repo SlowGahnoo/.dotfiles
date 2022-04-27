@@ -43,5 +43,5 @@ vim.cmd("command! Q :q")
 require('plugins')
 
 vim.cmd("set noshowmode")
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme dracula")
 vim.cmd("set dictionary=spell,~/.config/nvim/dict/en.dict,~/.config/nvim/dict/el.dict")
