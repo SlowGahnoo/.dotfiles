@@ -20,7 +20,7 @@ dunst &
 clipmenud &
 xset r rate 300 60 &
 unclutter &
-fcitx -d &
+fcitx5 -d &
 
 # Receive notifications from android phone
 an2linuxserver.py &
