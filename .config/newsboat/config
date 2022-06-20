@@ -9,7 +9,7 @@ browser "qutebrowser --target window %u"
 highlight feedlist "---.*---" green default bold
 highlight feedlist ".*0/0.."  default default invis
 
-macro t set browser "qutebrowser %u"; open-in-browser; set browser "qutebrowser ==target window %u"
+macro t set browser "/usr/share/qutebrowser/scripts/open_url_in_instance.sh %u"; open-in-browser; set browser "/usr/share/qutebrowser/scripts/open_url_in_instance.sh %u"
 
 bind-key j next
 bind-key k prev
