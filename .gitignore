@@ -11,3 +11,4 @@
 .config/qutebrowser/__pycache__
 .config/qutebrowser/qsettings
 .config/qutebrowser/quickmarks
+.config/newsboat

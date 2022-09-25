@@ -98,7 +98,7 @@ alias pcmanfm="pcmanfm-qt"
 
 alias sudo='doas'
 alias tuxguitar="JAVA_HOME=/usr/lib/jvm/java-11-openjdk tuxguitar"
-alias neofetch="neofetch --chafa"
+alias neofetch="neofetch --ascii"
 
 PATH+=":/opt/pypy3/bin"
 
