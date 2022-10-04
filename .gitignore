@@ -12,3 +12,9 @@
 .config/qutebrowser/qsettings
 .config/qutebrowser/quickmarks
 .config/newsboat
+
+.scripts/acpi-notifications
+.scripts/headphones.sh
+.scripts/powermenu.sh
+.scripts/prtsc.sh
+.scripts

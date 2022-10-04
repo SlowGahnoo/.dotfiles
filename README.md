@@ -2,7 +2,7 @@
 My system configuration files
 ## Setup
 ```
-git clone --recurse-submodules git://github.com/SlowGahnoo/.dotfiles
+git clone --recurse-submodules https://github.com/SlowGahnoo/.dotfiles
 cd .dotfiles
 stow .
 ```
