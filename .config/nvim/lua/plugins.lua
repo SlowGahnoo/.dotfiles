@@ -19,7 +19,6 @@ require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	use 'lewis6991/spellsitter.nvim'
 	use {
 		'turbio/bracey.vim',
 		run = 'npm --prefix server'
@@ -84,7 +83,6 @@ require'nvim-treesitter.configs'.setup {
   sync_install = false
 }
 
-require('spellsitter').setup()
 
 
 cmp.setup({
@@ -142,8 +140,7 @@ require("cmp_dictionary").setup({
     debug = false,
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -173,7 +170,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 

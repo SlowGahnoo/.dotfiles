@@ -69,10 +69,10 @@ settings = {
 
         # Adblock lists
         'content.blocking.adblock.lists'    : [
-                                                "https://easylist.to/easylist/easylist.txt", 
-                                                "https://easylist.to/easylist/easyprivacy.txt",
-                                                "https://easylist.to/easylist/fanboy-annoyance.txt",
-                                                "https://easylist.to/easylist/fanboy-social.txt",
+                                                "https://easylist-downloads.adblockplus.org/easylist.txt", 
+                                                "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+                                                "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
+                                                "https://easylist-downloads.adblockplus.org/fanboy-social.txt",
                                                 "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
                                                 "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
                                                 "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt",
