@@ -12,7 +12,6 @@ require('packer').startup(function()
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'rafamadriz/friendly-snippets'
-	-- use 'f3fora/cmp-spell'
 	use 'uga-rosa/cmp-dictionary'
 	use 'nvim-orgmode/orgmode'
 	use {
@@ -41,6 +40,8 @@ require('packer').startup(function()
 	-- use 'dracula/vim'
 	use 'sainnhe/sonokai'
 	use 'h-hg/fcitx.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'simrat39/rust-tools.nvim'
 end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
@@ -79,7 +80,7 @@ require'nvim-treesitter.configs'.setup {
     disable = {'org'},
     additional_vim_regex_highlighting = {'org'},
   },
-  ensure_installed = {'c', 'cpp', 'lua', 'python','org'}, -- Or run :TSUpdate org
+  ensure_installed = {'c', 'cpp', 'rust', 'lua', 'python','org'}, -- Or run :TSUpdate org
   sync_install = false
 }
 
@@ -249,6 +250,28 @@ require("dapui").setup({
   }
 })
 
+local extension_path = '/HDD/vscode_ext/extension/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+
+local rt = require('rust-tools')
+local r_opts = {
+	server = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	},
+	tools = {
+		inlay_hints = {
+			auto = false,
+			show_parameter_hints = false,
+		},
+	},
+	dap = {
+		adapter = require('rust-tools.dap').get_codelldb_adapter(
+		     codelldb_path, liblldb_path)
+	},
+}
+rt.setup(r_opts)
 
 local dap = require('dap')
 dap.adapters.cppdbg = {
@@ -257,7 +280,7 @@ dap.adapters.cppdbg = {
   command = '/usr/local/bin/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
 }
 
-local dap = require('dap')
+
 dap.configurations.cpp = {
   {
     name = "Launch file",
@@ -277,22 +300,11 @@ dap.configurations.cpp = {
 	},
 
   },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-  },
 }
 
+
+
 dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
 
 
 vim.cmd([[
@@ -310,3 +322,4 @@ nnoremap <silent> <leader>b  :lua require('dap').toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dr :lua require('dap').repl.toggle()<CR>
 nnoremap <silent> <leader>dd :lua require('dapui').toggle()<CR>
 ]])
+
