@@ -36,7 +36,7 @@ keybinds = {
 settings = {
 
         # Fingerprint Settings
-        'content.headers.user_agent'        : 'Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0',
+        # 'content.headers.user_agent'        : 'Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/106.0',
         # 'content.headers.accept_language'   : 'en-US,en;q=0.5',
         # 'content.headers.custom'            : {"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
 
