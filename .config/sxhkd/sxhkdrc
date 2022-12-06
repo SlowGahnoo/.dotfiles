@@ -58,7 +58,7 @@ super + shift + p
 		clipmenu
 
 super + shift + t
-		dolphin
+		QT_QPA_PLATFORMTHEME=qt5ct dolphin
 
 super + grave
 		pkill unicode.sh & st -c StFloat -g 100x30  ~/.scripts/unicode/unicode.sh

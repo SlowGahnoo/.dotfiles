@@ -10,10 +10,10 @@ export XMODIFIERS=@im=fcitx
 
 # Export parameters for Ripcord to use system libraries
 export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins
-export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_QPA_PLATFORMTHEME=qt6ct
 export RIPCORD_STYLE_ENGINE=wrong
 
-export DVTM_EDITOR=vim
+source /etc/X11/xinit/xinitrc.d/*
 
 # Daemons
 sxhkd &
@@ -21,7 +21,7 @@ dunst &
 clipmenud &
 xset r rate 300 60 &
 unclutter &
-fcitx5 -d &
+QT_QPA_PLATFORMTHEME=qt5ct fcitx5 -d &
 clight &
 
 # Receive notifications from android phone
@@ -33,9 +33,8 @@ feh --bg-fill "$HOME/Wallpapers/1422455757637-4.png" &
 # Run compositor
 picom --config $HOME/.config/picom/picom.conf &
 
-source /etc/X11/xinit/xinitrc.d/*
 
-$HOME/.scripts/acpi-notifications &
+$HOME/.scripts/acpi_notifications &
 # python $HOME/.scripts/acpi_handler.py &
 
 setxkbmap -option caps:escape 
