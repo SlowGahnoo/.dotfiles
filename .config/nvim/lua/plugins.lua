@@ -18,10 +18,6 @@ require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	use {
-		'turbio/bracey.vim',
-		run = 'npm --prefix server'
-	}
 	use 'windwp/nvim-autopairs'
 	use 'folke/which-key.nvim'
 	use 'norcalli/nvim-colorizer.lua'
@@ -45,6 +41,7 @@ require('packer').startup(function()
 end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
+
 
 require('nvim-tree').setup({
 	view = {
