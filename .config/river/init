@@ -172,4 +172,4 @@ QT_QPA_PLATFORMTHEME=qt5ct fcitx5 -d &
 clight &
 $HOME/.scripts/acpi_notifications &
 waybar &
-swaybg -m fit -i $HOME/Wallpapers/1597042810782.jpg &
+swaybg -m fit -i $HOME/Wallpapers/1673101214769138.jpg &
