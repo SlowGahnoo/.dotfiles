@@ -31,6 +31,8 @@ keybinds = {
         # Hide tabs and navigation bar (old keybinds)
         'xt'       : 'config-cycle tabs.show multiple switching',
         #'xb': 'config-cycle statusbar.hide',
+        'gs'             : 'spawn --userscript yomichad --names',
+        'gS'             : 'spawn --userscript yomichad --prefix-search',
 }
 
 settings = {
