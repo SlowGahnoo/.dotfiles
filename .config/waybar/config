@@ -1,14 +1,30 @@
 {
     "layer": "top",
-    "modules-left": ["river/tags", "river/mode", "river/window"],
+    "modules-left": ["wlr/workspaces", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["network", "memory", "temperature", "battery", "clock", "tray"],
 
-	"river/tags": {
+	"hyprland/workspaces": {
+		"format": "{icon}",
+		"on-click": "activate",
+		"format-icons": {
+			"1": "1",
+			"2": "2",
+			"3": "3",
+			"4": "4",
+			"5": "5",
+			"5": "5",
+			"6": "6",
+			"7": "7",
+			"8": "8",
+			"9": "9",
+			"9": "9",
+		},
+		"sort-by-number": true
 	},
 
-    "river/window": {
-        "max-length": 50
+    "hyprland/window": {
+		"format": "{}",
     },
 
 	"network": {
@@ -43,5 +59,8 @@
     },
     "clock": {
         "format": "{:%A %d %B %R}"
-    }
+    },
+	"tray": {
+		"spacing": 10
+	}
 }
