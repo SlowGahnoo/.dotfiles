@@ -19,11 +19,6 @@ require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	use 'lewis6991/spellsitter.nvim'
-	use {
-		'turbio/bracey.vim',
-		run = 'npm --prefix server'
-	}
 	use 'windwp/nvim-autopairs'
 	use 'folke/which-key.nvim'
 	use 'norcalli/nvim-colorizer.lua'
@@ -39,8 +34,11 @@ require('packer').startup(function()
 	    }
 	}
 	use 'tikhomirov/vim-glsl'
-	use 'ellisonleao/gruvbox.nvim'
+	-- use 'dracula/vim'
+	use 'sainnhe/sonokai'
 	use 'h-hg/fcitx.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'simrat39/rust-tools.nvim'
 end)
 
 vim.cmd([[autocmd! BufNewFile,BufRead *.vs,*.fs,*.fragmentshader,*.vertexshader set ft=glsl]])
@@ -56,7 +54,7 @@ require('nvim_comment').setup()
 
 require('lualine').setup({
   options = {
-    theme = 'gruvbox', 
+    theme = 'sonokai', 
     component_separators = {'|'},
     section_separators = {''},
   }
@@ -79,13 +77,10 @@ require'nvim-treesitter.configs'.setup {
     disable = {'org'},
     additional_vim_regex_highlighting = {'org'},
   },
-  ensure_installed = {'c', 'cpp', 'lua', 'python','org'}, -- Or run :TSUpdate org
+  ensure_installed = {'c', 'cpp', 'rust', 'lua', 'python','org'}, -- Or run :TSUpdate org
   sync_install = false
 }
 
-
-
-require('spellsitter').setup()
 
 
 cmp.setup({
@@ -95,10 +90,10 @@ cmp.setup({
     end,
   },
   
-  completion = {
-  	completeopt = 'menu,menuone,noinsert',
-  	autocomplete = false,
-  },
+  -- completion = {
+  -- 	completeopt = 'menu,menuone,noinsert',
+  -- 	autocomplete = false,
+  -- },
 
   window = {
 	  completion = cmp.config.window.bordered(),
@@ -123,8 +118,9 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'dictionary', keyword_length = 2 },
+    { name = 'dictionary', keyword_length = 2, max_item_count = 30 },
     { name = 'orgmode' },
+	{}
   }
 })
 
@@ -142,8 +138,7 @@ require("cmp_dictionary").setup({
     debug = false,
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -173,7 +168,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 
@@ -209,25 +204,34 @@ require("dapui").setup({
     repl = "r",
     toggle = "t",
   },
-  sidebar = {
-    -- You can change the order of elements in the sidebar
-    elements = {
-      -- Provide as ID strings or tables with "id" and "size" keys
-      {
-        id = "scopes",
-        size = 0.25, -- Can be float or integer > 1
+  -- Expand lines larger than the window
+  -- Requires >= 0.7
+  expand_lines = vim.fn.has("nvim-0.7"),
+  -- Layouts define sections of the screen to place windows.
+  -- The position can be "left", "right", "top" or "bottom".
+  -- The size specifies the height/width depending on position.
+  -- Elements are the elements shown in the layout (in order).
+  -- Layouts are opened in order so that earlier layouts take priority in window sizing.
+  layouts = {
+    {
+      elements = {
+      -- Elements can be strings or table with id and size keys.
+        { id = "scopes", size = 0.25 },
+        "breakpoints",
+        "stacks",
+        "watches",
       },
-      { id = "breakpoints", size = 0.25 },
-      { id = "stacks", size = 0.25 },
-      { id = "watches", size = 00.25 },
+      size = 40,
+      position = "right",
     },
-    size = 40,
-    position = "right", -- Can be "left", "right", "top", "bottom"
-  },
-  tray = {
-    elements = { "repl" },
-    size = 10,
-    position = "bottom", -- Can be "left", "right", "top", "bottom"
+    {
+      elements = {
+        "repl",
+        "console",
+      },
+      size = 10,
+      position = "bottom",
+    },
   },
   floating = {
     max_height = nil, -- These can be integers or a float between 0 and 1.
@@ -238,7 +242,33 @@ require("dapui").setup({
     },
   },
   windows = { indent = 1 },
+  render = {
+    max_type_length = nil, -- Can be integer or nil.
+  }
 })
+
+local extension_path = '/HDD/vscode_ext/extension/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+
+local rt = require('rust-tools')
+local r_opts = {
+	server = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	},
+	tools = {
+		inlay_hints = {
+			auto = false,
+			show_parameter_hints = false,
+		},
+	},
+	dap = {
+		adapter = require('rust-tools.dap').get_codelldb_adapter(
+		     codelldb_path, liblldb_path)
+	},
+}
+rt.setup(r_opts)
 
 local dap = require('dap')
 dap.adapters.cppdbg = {
@@ -247,7 +277,7 @@ dap.adapters.cppdbg = {
   command = '/usr/local/bin/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
 }
 
-local dap = require('dap')
+
 dap.configurations.cpp = {
   {
     name = "Launch file",
@@ -258,23 +288,20 @@ dap.configurations.cpp = {
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
+	setupCommands = {  
+	  { 
+	     text = '-enable-pretty-printing',
+	     description =  'enable pretty printing',
+	     ignoreFailures = false 
+	  },
+	},
+
   },
 }
 
+
+
 dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
 
 
 vim.cmd([[
@@ -292,3 +319,4 @@ nnoremap <silent> <leader>b  :lua require('dap').toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dr :lua require('dap').repl.toggle()<CR>
 nnoremap <silent> <leader>dd :lua require('dapui').toggle()<CR>
 ]])
+

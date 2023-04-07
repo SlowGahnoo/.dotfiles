@@ -56,9 +56,8 @@ function man() {
 }
 
 precmd () {
-    tmux  set -g status-right "#[fg=#282a36, bg=#50fa7b, bold]  #[fg=#50fa7b,bg=#44475a, bold] #{pane_current_path} #[default] "
+    tmux  set -g status-right "#[fg=#3b383e, bg=#a9dc76, bold]  #[fg=#a9dc76,bg=#3b383e, bold] #{pane_current_path} #[default] "
 }
-
 
 
 # Enable colors and change prompt:
@@ -99,7 +98,7 @@ alias pcmanfm="pcmanfm-qt"
 
 alias sudo='doas'
 alias tuxguitar="JAVA_HOME=/usr/lib/jvm/java-11-openjdk tuxguitar"
-alias neofetch="neofetch --chafa"
+alias neofetch="neofetch --ascii"
 
 PATH+=":/opt/pypy3/bin"
 

@@ -1,0 +1,41 @@
+* {
+	border: none;
+	font-family: "Uw Ttyp0", "Kochi Gothic";
+	font-size: 14px;
+}
+
+#workspaces button {
+	padding: 0;
+	border-radius: 0;
+}
+#workspaces button.occupied {
+	background: gray;
+	color: white;
+}
+
+#workspaces button.active {
+	background: white;
+	color: black;
+}
+
+#workspaces button.urgent {
+	background: red;
+	color: white;
+}
+
+#battery, 
+#clock, 
+#tray, 
+#temperature, 
+#memory, 
+#network {
+	margin-right: 20px;
+}
+
+#mode, #window {
+	margin-left: 20px;
+}
+
+#temperature.critical {
+	color: red;
+}
