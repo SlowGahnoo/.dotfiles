@@ -1,6 +1,6 @@
 [Groups/0]
 # Group Name
-Name="Group 1"
+Name=Default
 # Layout
 Default Layout=us
 # Default Input Method
@@ -14,16 +14,16 @@ Layout=
 
 [Groups/0/Items/1]
 # Name
-Name=keyboard-gr-polytonic
+Name=mozc
 # Layout
 Layout=
 
 [Groups/0/Items/2]
 # Name
-Name=mozc
+Name=keyboard-gr-polytonic
 # Layout
 Layout=
 
 [GroupOrder]
-0="Group 1"
+0=Default
 

@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["wlr/workspaces", "hyprland/window"],
     "modules-center": [],
-    "modules-right": ["network", "memory", "temperature", "battery", "clock", "tray"],
+    "modules-right": ["network", "memory", "temperature", "clock", "tray"],
 
 	"hyprland/workspaces": {
 		"format": "{icon}",
@@ -53,10 +53,6 @@
 	    "format": " {temperatureC}°C"
 	},
 
-    "battery": {
-        "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
-    },
     "clock": {
         "format": "{:%A %d %B %R}"
     },
