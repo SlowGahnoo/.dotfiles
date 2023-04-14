@@ -46,9 +46,9 @@ settings = {
         # 'content.proxy'                   : 'socks://localhost:9050',
 
         # Fonts
-        'fonts.default_family'              : ["Uw Ttyp0", "Kochi Gothic","Hack", "Noto Color Emoji"],
-        'fonts.prompts'                      : "(TTF) Terminus",
-        'fonts.default_size'                : "10pt",
+        'fonts.default_family'              : ["Unifont", "Noto Color Emoji"],
+        # 'fonts.prompts'                      : "(TTF) Terminus",
+        'fonts.default_size'                : "12pt",
 
         # Downloads Directory
         'downloads.location.directory'      : '/HDD/Downloads',

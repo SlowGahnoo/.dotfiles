@@ -2,7 +2,7 @@ import operator, re, typing
 from urllib.parse import urljoin
 
 from qutebrowser.api import interceptor, message
-from PyQt5.QtCore import QUrl
+from PySide6.QtCore import QUrl
 
 # Any return value other than a literal 'False' means we redirected
 REDIRECT_MAP = {
