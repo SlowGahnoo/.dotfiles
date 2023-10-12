@@ -1,4 +1,3 @@
-vim.g.mapleader        = " "
 vim.opt.termguicolors  = true
 vim.opt.mouse          = "a"
 vim.opt.undofile       = true
@@ -20,6 +19,23 @@ vim.opt.ttimeoutlen = 100
 
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
+vim.g.mapleader        = " "
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+
+require('lazy').setup('plugins')
 
 -- "Navigate by display lines instead of regular lines
 vim.api.nvim_set_keymap("", "j", "gj", {noremap = true})
@@ -39,8 +55,6 @@ vim.api.nvim_set_keymap("n", "tt", ":split<Bar>terminal<CR>", {noremap = true})
 vim.cmd("command! W :w")
 vim.cmd("command! Q :q")
 
-
-require('plugins')
 
 vim.cmd("set noshowmode")
 -- vim.cmd("colorscheme dracula")
