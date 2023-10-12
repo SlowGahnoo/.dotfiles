@@ -3,7 +3,6 @@ return {
 	'tikhomirov/vim-glsl',
 	'sainnhe/sonokai',
 	'h-hg/fcitx.nvim',
-	'nvim-lua/plenary.nvim',
 	{'simrat39/rust-tools.nvim',
 		config = function()
 			local rt = require('rust-tools')
