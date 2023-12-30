@@ -18,3 +18,8 @@
 .scripts/powermenu.sh
 .scripts/prtsc.sh
 .scripts
+.config/nvim/lazy-lock.json
+.config/fcitx5/conf/cached_layouts
+.config/fcitx5/crash.log
+.config/fcitx5/profile
+.config/mpd/state
