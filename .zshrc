@@ -1,3 +1,10 @@
+function webm2gif ()
+{
+	ffmpeg -y -i "$1" -vf palettegen _tmp_palette.png
+	ffmpeg -y -i "$1" -i _tmp_palette.png -filter_complex paletteuse -r ${2:-"15"} "${1%.webm}.gif"
+	rm _tmp_palette.png
+	
+}
 
 function timestamp() {
 	echo $(($(date +%s%N)/1000000))
@@ -18,12 +25,13 @@ function cheat(){
 
 function weather(){ 
 	# Display full weather of location
-	curl -s wttr.in/${1:-"Patras"}\?2 | head -n -3 
+	curl -s wttr.in/${1:-"Patras"}\?2F | head -n -1 
 }
 
 function wt(){ 
 	# Display full weather widget of location
-	curl -s wttr.in/${1:-"Patras"}\?2 | head -n 7 | tail -n6
+	# curl -s wttr.in/${1:-"Patras"}\?2 | head -n 7 | tail -n6
+	curl -s wttr.in/${1:-"Patras"}\?0
 }
 
 function qrenc(){
@@ -76,6 +84,10 @@ zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 #_comp_options+=(globdots)		# Include hidden files.
+# Coloring
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
+zstyle ':completion:*:*:kill:*' list-colors '=(#b) #([0-9]#)*( *[a-z])*=34=31=255'
+
 
 # vi mode
 bindkey -v
@@ -94,7 +106,6 @@ alias vim="nvim"
 alias pacman="pacman --color=auto" 
 alias mv="mv -i"
 alias rm="rm -i"
-alias pcmanfm="pcmanfm-qt"
 
 alias sudo='doas'
 alias tuxguitar="JAVA_HOME=/usr/lib/jvm/java-11-openjdk tuxguitar"
@@ -103,4 +114,6 @@ alias neofetch="neofetch --ascii"
 PATH+=":/opt/pypy3/bin"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/fzf/key-bindings.zsh
+
