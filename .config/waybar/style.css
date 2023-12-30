@@ -4,13 +4,13 @@
 	font-size: 14px;
 }
 
+#mpd {
+	font-family: "Uw Ttyp0", "Kochi Gothic", "Hack Nerd Font";
+}
+
 #workspaces button {
 	padding: 0;
 	border-radius: 0;
-}
-#workspaces button.occupied {
-	background: gray;
-	color: white;
 }
 
 #workspaces button.active {
@@ -30,6 +30,28 @@
 #memory, 
 #network {
 	margin-right: 20px;
+}
+
+#battery.critical:not(charging) {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#temperature.critical {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        color: #af005f;
+    }
 }
 
 #mode, #window {

@@ -1,12 +1,11 @@
 {
     "layer": "top",
-    "modules-left": ["wlr/workspaces", "hyprland/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
-    "modules-right": ["network", "memory", "temperature", "battery", "clock", "tray"],
+    "modules-right": ["mpd","network", "memory", "temperature", "battery", "clock", "tray"],
 
 	"hyprland/workspaces": {
-		"format": "{icon}",
-		"on-click": "activate",
+		"format": "{name}",
 		"format-icons": {
 			"1": "1",
 			"2": "2",
@@ -18,14 +17,20 @@
 			"7": "7",
 			"8": "8",
 			"9": "9",
-			"9": "9",
+			"active": "",
+			"default": ""
 		},
-		"sort-by-number": true
 	},
 
-    "hyprland/window": {
-		"format": "{}",
-    },
+	"hyprland/window": {
+	    "format": "{}",
+	    "rewrite": {
+	        "(.*) — Mozilla Firefox": "🌎 $1",
+	        "(.*) - fish": "> [$1]"
+	    },
+	    "separate-outputs": true
+	},
+
 
 	"network": {
 	    "interface": "wlp3s0",
@@ -48,19 +53,49 @@
 	 "temperature": {
 	    // "thermal-zone": 2,
 	    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-	    // "critical-threshold": 80,
 	    // "format-critical": "{temperatureC}°C ",
+		"critical-threshold": 80,
 	    "format": " {temperatureC}°C"
 	},
 
     "battery": {
         "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+		"states": {
+			"critical": 15
+		}
     },
     "clock": {
         "format": "{:%A %d %B %R}"
     },
 	"tray": {
 		"spacing": 10
+	},
+
+	"mpd": {
+	    "format": "{stateIcon} {randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+	    "format-disconnected": "Disconnected ",
+	    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+	    "interval": 10,
+	    "consume-icons": {
+	        "on": " " // Icon shows only when "consume" is on
+	    },
+	    "random-icons": {
+	        "off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
+	        "on": " "
+	    },
+	    "repeat-icons": {
+	        "on": " "
+	    },
+	    "single-icons": {
+	        "on": "1 "
+	    },
+	    "state-icons": {
+	        "paused": " ",
+	        "playing": " "
+	    },
+	    "tooltip-format": "MPD (connected)",
+	    "tooltip-format-disconnected": "MPD (disconnected)"
 	}
+
 }
