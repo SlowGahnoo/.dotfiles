@@ -82,8 +82,8 @@ visualizer_sync_interval = 30
 ##
 visualizer_type = wave
 #
-# visualizer_look = ▋▋
-visualizer_look = "  " 
+visualizer_look = ▋▋
+# visualizer_look = "´∀" 
 #visualizer_look = ██
 #visualizer_look = ▊▊ 
 #
@@ -277,7 +277,7 @@ browser_sort_format = {%A - }{%t}|{%f} {(%l)}
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-execute_on_song_change = "~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+#execute_on_song_change = "~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
 #
 ##
 ## Note: Custom command that will be executed each time player state
