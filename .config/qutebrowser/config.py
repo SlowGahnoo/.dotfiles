@@ -82,7 +82,6 @@ settings = {
                                                 "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
                                                 "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
                                                 "https://raw.githubusercontent.com/kargig/greek-adblockplus-filter/master/void-gr-filters.txt",
-                                                "https://gitlab.com/Sorrow-San/9anime-adblock-filters/raw/master/9Anime%20filter%20list"
                                               ]
 }
 
