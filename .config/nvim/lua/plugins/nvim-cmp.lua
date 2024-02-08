@@ -14,6 +14,10 @@ return {
 		},
 		config = function()
 			local cmp = require'cmp'
+
+			local dict = {
+			     ["*"] = {  "~/.config/nvim/dict/en.dict" },
+			 }
 			
 			cmp.setup({
 			  snippet = {
@@ -54,20 +58,20 @@ return {
 			    { name = 'orgmode' },
 				{}
 			  }
+
+
 			})
 			
 			require("cmp_dictionary").setup({
-			    dic = {
-			        ["*"] = { "~/.config/nvim/dict/en.dict" },
-			    },
-			    -- The following are default values, so you don't need to write them if you don't want to change them
-			    exact = 2,
+
+				paths = dict["*"],
+			    exact_length = 2,
 			    first_case_insensitive = false,
-			    document = false,
-			    document_command = "wn %s -over",
-			    async = true, 
-			    capacity = 5,
-			    debug = false,
+			    document = {
+					enable = false,
+					command = { "wn", "${label}", "-over" },
+
+				},
 			})
 			
 			capabilities = require('cmp_nvim_lsp').default_capabilities()

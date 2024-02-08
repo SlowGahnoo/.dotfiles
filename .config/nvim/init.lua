@@ -21,6 +21,9 @@ vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
 vim.g.mapleader        = " "
 
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = 'nc'
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
