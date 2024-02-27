@@ -68,6 +68,7 @@ settings = {
         'content.blocking.enabled'          : True,
         'content.blocking.method'           : 'adblock',
         'spellcheck.languages'              : ["en-GB", "el-GR"],
+        'content.javascript.clipboard'      : 'access',
 
         # Adblock lists
         'content.blocking.adblock.lists'    : [
