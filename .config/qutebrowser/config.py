@@ -51,7 +51,7 @@ settings = {
         'fonts.default_size'                : "12pt",
 
         # Downloads Directory
-        'downloads.location.directory'      : '/HDD/Downloads',
+        # 'downloads.location.directory'      : '/HDD/Downloads',
 
         # UI
         # 'colors.webpage.bg'                 : 'black',
