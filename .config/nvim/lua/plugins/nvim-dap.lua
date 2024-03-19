@@ -1,11 +1,13 @@
 return {
 	'mfussenegger/nvim-dap',
 		dependencies = {
+			'nvim-neotest/nvim-nio',
 			'rcarriga/nvim-dap-ui',
 			'mfussenegger/nvim-dap-python',
+			'folke/neodev.nvim'
 		},
 		config = function()
-			require('dap')
+			local dap = require('dap')
 			vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
 			require('dap-python').setup('/usr/bin/python')
 			
@@ -62,12 +64,15 @@ return {
 			    max_type_length = nil, -- Can be integer or nil.
 			  }
 			})
+
+			require("neodev").setup({
+				library = { plugins = { "nvim-dap-ui" }, types = true },
+			})
 			
 			local extension_path = '/HDD/vscode_ext/extension/'
 			local codelldb_path = extension_path .. 'adapter/codelldb'
 			local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
 			
-			local dap = require('dap')
 			dap.adapters.cppdbg = {
 			  id = 'cppdbg',
 			  type = 'executable',
