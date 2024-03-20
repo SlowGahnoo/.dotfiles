@@ -1,0 +1,9 @@
+[Unit]
+Description=Run neovim every minute for org notifications
+
+[Service]
+Type=oneshot
+ExecStart=nvim --headless -c 'lua require("orgmode").cron()'
+
+[Install]
+WantedBy=default.target

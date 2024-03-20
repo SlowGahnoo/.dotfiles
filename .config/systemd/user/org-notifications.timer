@@ -1,0 +1,9 @@
+[Unit]
+Description=Run neovim every minute for org notifications
+
+[Timer]
+Unit=org-notifications.service
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=timers.target
