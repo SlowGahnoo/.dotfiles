@@ -7,22 +7,38 @@ plugins = [
 animation = "fromTop"
 command = "foot -a foot-scratchpad tmux new -A -s scratch"
 class = "foot-scratchpad"
-position = "25% 0%"
+position = "25% 29px"
 size = "50% 50%"
-max_size = "1600px 100%"
+max_size = "2900px 100%"
 
 [scratchpads.unicode]
 animation = "fromTop"
 command = "foot -a unicode-scratchpad $HOME/.scripts/unicode/unicode.sh"
 class = "unicode-scratchpad"
-position = "25% 0%"
+position = "25% 29px"
 size = "50% 50%"
-max_size = "1600px 100%"
+max_size = "2900px 100%"
 
 [scratchpads.ncmpcpp]
 animation = "fromTop"
 command = "foot -a ncmpcpp-scratchpad ncmpcpp"
 class = "ncmpcpp-scratchpad"
-position = "25% 0%"
+position = "25% 29px"
 size = "60% 50%"
-max_size = "1600px 100%"
+max_size = "2900px 100%"
+
+[scratchpads.mail]
+animation = "fromTop"
+command = "foot -a mail-scratchpad neomutt"
+class = "mail-scratchpad"
+position = "25% 29px"
+size = "60% 50%"
+max_size = "2900px 100%"
+
+[scratchpads.agenda]
+animation = "fromTop"
+command = "foot -a agenda-scratchpad nvim ~/orgfiles/agenda.org"
+class = "agenda-scratchpad"
+position = "25% 29px"
+size = "50% 50%"
+max_size = "2900px 100%"
