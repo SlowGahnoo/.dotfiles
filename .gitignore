@@ -23,3 +23,8 @@
 .config/fcitx5/crash.log
 .config/fcitx5/profile
 .config/mpd/state
+.config/mpd/database
+.config/mpd/playlists
+.config/systemd/user/sockets.target.wants
+.config/systemd/user/default.target.wants
+.config/hypr/pfp.png
