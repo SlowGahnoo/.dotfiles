@@ -3,7 +3,7 @@ Description=Run neovim every minute for org notifications
 
 [Service]
 Type=oneshot
-ExecStart=nvim --headless -c 'lua require("orgmode").cron()'
+ExecStart=nvim -u NONE --noplugin --headless -c 'lua require("partials.org_cron")'
 
 [Install]
 WantedBy=default.target
