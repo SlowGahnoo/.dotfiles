@@ -5,19 +5,19 @@
     "modules-right": ["mpd","network", "memory", "temperature", "battery", "clock", "tray"],
 
 	"hyprland/workspaces": {
-		"format": "{name}",
+		"format": "{icon}",
 		"format-icons": {
-			"1": "1",
-			"2": "2",
-			"3": "3",
-			"4": "4",
-			"5": "5",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"active": "",
+			"1": "一",
+			"2": "二",
+			"3": "三",
+			"4": "四",
+			"5": "五",
+			"6": "六",
+			"7": "七",
+			"8": "八",
+			"9": "九",
+			"10": "十",
+			//"active": "",
 			"default": ""
 		},
 	},
@@ -66,7 +66,22 @@
 		}
     },
     "clock": {
-        "format": "{:%A %d %B %R}"
+        "format": "{:%A %d %B %R}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+		 "calendar": {
+                    "mode"          : "month",
+                    "mode-mon-col"  : 3,
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 0,
+                    "format": {
+                              "months":     "<span color='#ffead3'><b>{}</b></span>",
+                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              }
+                    },
+
     },
 	"tray": {
 		"spacing": 10
@@ -74,6 +89,7 @@
 
 	"mpd": {
 	    "format": "{stateIcon} {randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+		"title-len": 50,
 	    "format-disconnected": "Disconnected ",
 	    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
 	    "interval": 10,

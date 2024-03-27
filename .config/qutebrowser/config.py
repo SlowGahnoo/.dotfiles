@@ -46,7 +46,7 @@ settings = {
         # 'content.proxy'                   : 'socks://localhost:9050',
 
         # Fonts
-        'fonts.default_family'              : ["Unifont", "Noto Color Emoji"],
+        'fonts.default_family'              : ["Unifont", "Kochi Gothic", "Noto Color Emoji"],
         # 'fonts.prompts'                      : "(TTF) Terminus",
         'fonts.default_size'                : "12pt",
 
